@@ -20,7 +20,11 @@ defmodule Usd2rur.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Usd2rur do
-  #   pipe_through :api
-  # end
+   scope "/api", Usd2rur do
+     pipe_through :api
+
+     scope "/currency" do
+       get "/alpha", CurrencyController, :alpha
+     end
+   end
 end
