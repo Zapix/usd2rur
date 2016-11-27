@@ -42,7 +42,8 @@ defmodule Usd2rur.Mixfile do
      {:dialyxir, "~> 0.3.5", only: [:dev]},
      {:ecto, github: "aaronjensen/ecto", override: true},
      {:httpoison, "~> 0.10.0"},
-     {:json, "~> 1.0"}]
+     {:json, "~> 1.0"},
+     {:mock, "~> 0.2.0", only: :test}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

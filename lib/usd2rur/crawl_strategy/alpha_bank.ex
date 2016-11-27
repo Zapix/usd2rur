@@ -33,7 +33,7 @@ defmodule Usd2rur.CrawlStrategy.AlphaBank do
   end
 
   def parse(_) do
-    {:error, :server_request_error}
+    {:error, :server_request_error, "unexpected error"}
   end
 
 end

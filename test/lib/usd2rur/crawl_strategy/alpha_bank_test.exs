@@ -13,8 +13,8 @@ defmodule Usd2rur.CrawlStrategy.AlphaBankTest do
         ]
       ]
     ]
-
     {:ok, json} = JSON.encode(success_data)
+
     response = %HTTPoison.Response{
       status_code: 200,
       body: json
@@ -58,6 +58,6 @@ defmodule Usd2rur.CrawlStrategy.AlphaBankTest do
   end
 
   test "another error" do
-    assert {:error, :server_request_error} = AlphaBank.parse("something else")
+    assert {:error, :server_request_error, _} = AlphaBank.parse("something else")
   end
 end
