@@ -15,12 +15,12 @@ defmodule Usd2rur.CrawlStrategy.AlphaBank do
           "data" => %{
             "usd" => [
               %{ "type" => "buy", "value" => buy_value },
-              %{ "type" => "sell", "value" => cell_value }
+              %{ "type" => "sell", "value" => sell_value }
             ]
           }
         }
       }} ->
-        {:ok, [buy_value: buy_value, sell_value: cell_value]}
+        {:ok, [buy_value: buy_value, sell_value: sell_value]}
       {:ok, _} ->
         {:error, :wrong_json_structure, body}
       _ ->
@@ -35,5 +35,4 @@ defmodule Usd2rur.CrawlStrategy.AlphaBank do
   def parse(_) do
     {:error, :server_request_error, "unexpected error"}
   end
-
 end
