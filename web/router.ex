@@ -24,7 +24,7 @@ defmodule Usd2rur.Router do
      pipe_through :api
 
      scope "/currency" do
-       get "/alpha", CurrencyController, :alpha
+       get "/:bank", CurrencyController, :bank
      end
    end
 end
