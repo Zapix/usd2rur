@@ -5,6 +5,12 @@ defmodule Usd2rur do
   # for more information on OTP Applications
   def start(_type, _args) do
     import Supervisor.Spec
+    poolboy_config = [
+      {:name, {:local, pool_name()}},
+      {:worker_module, Usd2rur.CrawlerWorker},
+      {:size, 2},
+      {:max_overflow, 1}
+    ]
 
     # Define workers and child supervisors to be supervised
     children = [
@@ -14,6 +20,7 @@ defmodule Usd2rur do
       supervisor(Usd2rur.Endpoint, []),
       # Start your own worker by calling: Usd2rur.Worker.start_link(arg1, arg2, arg3)
       # worker(Usd2rur.Worker, [arg1, arg2, arg3]),
+      :poolboy.child_spec(pool_name(), poolboy_config, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
@@ -27,5 +34,9 @@ defmodule Usd2rur do
   def config_change(changed, _new, removed) do
     Usd2rur.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp pool_name do
+    :crawler_pool
   end
 end
