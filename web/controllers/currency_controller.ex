@@ -2,12 +2,13 @@ defmodule Usd2rur.CurrencyController do
   use Usd2rur.Web, :controller
   alias Usd2rur.CrawlStrategy.AlphaBank
   alias Usd2rur.CrawlStrategy.Sberbank
+  alias Usd2rur.CrawlStrategy.Tinkoff
   require Logger
   require Atom
 
   def bank(conn, %{"bank" => bank}) do
     Logger.info "Get data for #{bank} from on of #{inspect crawl_list}"
-    case Keyword.fetch(crawl_list, String.to_atom(bank)) do
+    case Map.fetch(crawl_list, bank) do
       {:ok, module} ->
         link = apply(module, :url, [])
         case apply(module, :parse, [HTTPoison.get(link)]) do
@@ -28,9 +29,10 @@ defmodule Usd2rur.CurrencyController do
   end
 
   defp crawl_list do
-    [
-      alpha: AlphaBank,
-      sberbank: Sberbank
-    ]
+    %{
+      "alpha" => AlphaBank,
+      "sberbank" => Sberbank,
+      "tinkoff" => Tinkoff
+    }
   end
 end

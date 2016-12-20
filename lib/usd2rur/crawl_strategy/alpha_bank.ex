@@ -1,9 +1,8 @@
 defmodule Usd2rur.CrawlStrategy.AlphaBank do
-  @docmodule """
+  @moduledoc """
   Contains info about url for requesting currency from AlfaBank and function that could parse it.
   """
 
-  @type url :: bitstring
   def url do
     "https://alfabank.ru/ext-json/0.2/exchange/cash/"
   end
