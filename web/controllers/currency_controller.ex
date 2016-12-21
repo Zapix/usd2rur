@@ -1,5 +1,6 @@
 defmodule Usd2rur.CurrencyController do
   use Usd2rur.Web, :controller
+  alias Usd2rur.CrawlerWorker
   alias Usd2rur.CrawlStrategy.AlphaBank
   alias Usd2rur.CrawlStrategy.Sberbank
   alias Usd2rur.CrawlStrategy.Tinkoff
@@ -11,7 +12,11 @@ defmodule Usd2rur.CurrencyController do
     case Map.fetch(crawl_list, bank) do
       {:ok, module} ->
         link = apply(module, :url, [])
-        case apply(module, :parse, [HTTPoison.get(link)]) do
+        response_data = :poolboy.transaction(
+          :crawler_pool,
+          fn pid -> CrawlerWorker.crawl(pid, link) end
+        )
+        case apply(module, :parse, [response_data]) do
           {:ok, [buy_value: buy_value, sell_value: sell_value]} ->
             json conn, %{"buy" => buy_value, "sell": sell_value}
           {:error, code, info}  ->

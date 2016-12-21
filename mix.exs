@@ -20,7 +20,7 @@ defmodule Usd2rur.Mixfile do
   def application do
     [mod: {Usd2rur, []},
      applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :httpoison]]
+                    :phoenix_ecto, :postgrex, :httpoison, :poolboy ]]
   end
 
   # Specifies which paths to compile per environment.
@@ -43,7 +43,8 @@ defmodule Usd2rur.Mixfile do
      {:ecto, github: "aaronjensen/ecto", override: true},
      {:httpoison, "~> 0.10.0"},
      {:json, "~> 1.0"},
-     {:mock, "~> 0.2.0", only: :test}]
+     {:mock, "~> 0.2.0", only: :test},
+     {:poolboy, "~> 1.5"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

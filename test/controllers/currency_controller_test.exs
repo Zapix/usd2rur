@@ -1,6 +1,7 @@
 defmodule Usd2rur.CurrencyControllerTest do
   use Usd2rur.ConnCase
   import Mock
+  require Logger
 
   describe "/api/currency/alpha" do
     test "success response", %{conn: conn} do
@@ -21,7 +22,7 @@ defmodule Usd2rur.CurrencyControllerTest do
         body: json
       }
 
-      with_mock HTTPoison, [get: fn _url -> {:ok, response} end] do
+      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:ok, response} end] do
         conn = get conn, "/api/currency/alpha"
         assert json_response(conn, 200)
       end
@@ -33,7 +34,7 @@ defmodule Usd2rur.CurrencyControllerTest do
         body: "internal server error"
       }
 
-      with_mock HTTPoison, [get: fn _url -> {:error, response} end] do
+      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:error, response} end] do
         conn = get conn, "/api/currency/alpha"
         assert json_response(conn, 400)
       end
@@ -59,7 +60,7 @@ defmodule Usd2rur.CurrencyControllerTest do
         body: json
       }
 
-      with_mock HTTPoison, [get: fn _url -> {:ok, response} end] do
+      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:ok, response} end] do
         conn = get conn, "/api/currency/sberbank"
         assert json_response(conn, 200)
       end
@@ -71,7 +72,7 @@ defmodule Usd2rur.CurrencyControllerTest do
         body: "internal server error"
       }
 
-      with_mock HTTPoison, [get: fn _url -> {:error, response} end] do
+      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:error, response} end] do
         conn = get conn, "/api/currency/sberbank"
         assert json_response(conn, 400)
       end
@@ -100,7 +101,7 @@ defmodule Usd2rur.CurrencyControllerTest do
         body: json
       }
 
-      with_mock HTTPoison, [get: fn _url -> {:ok, response} end] do
+      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:ok, response} end] do
         conn = get conn, "/api/currency/tinkoff"
         assert json_response(conn, 200)
       end
@@ -112,7 +113,7 @@ defmodule Usd2rur.CurrencyControllerTest do
         body: "internal server error"
       }
 
-      with_mock HTTPoison, [get: fn _url -> {:error, response} end] do
+      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:error, response} end] do
         conn = get conn, "/api/currency/tinkoff"
         assert json_response(conn, 400)
       end
