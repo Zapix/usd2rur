@@ -3,6 +3,14 @@ defmodule Usd2rur.CrawlStrategy.AlphaBank do
   Contains info about url for requesting currency from AlfaBank and function that could parse it.
   """
 
+  def name do
+    "Alpha"
+  end
+
+  def slug do
+    "alpha"
+  end
+
   def url do
     "https://alfabank.ru/ext-json/0.2/exchange/cash/"
   end

@@ -3,6 +3,16 @@ defmodule Usd2rur.CrawlStrategy.Sberbank do
   Contains info about url for requesting currency from AlfaBank and function that could parse it.
   """
 
+  @type name :: bitstring
+  def name do
+    "Sberbank"
+  end
+
+  @type slug :: bitstring
+  def slug do
+    "sberbank"
+  end
+
   @type url :: bitstring
   def url do
     "http://www.sberbank.ru/portalserver/proxy/?pipe=shortCachePipe&url=http%3A%2F%2Flocalhost%2Fsbt-services%2Fservices%2Frest%2FrateService%2Frate%2Fcurrent%3FcurrencyCode%3D840%26rateCategory%3Dbeznal%26regionId%3D2"

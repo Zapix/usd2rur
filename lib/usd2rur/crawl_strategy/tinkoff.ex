@@ -3,6 +3,14 @@ defmodule Usd2rur.CrawlStrategy.Tinkoff do
   Contains info about url for requesting currency from AlfaBank and function that could parse it.
   """
 
+  def name do
+    "Tinkoff"
+  end
+
+  def slug do
+    "tinkoff"
+  end
+
   def url do
     "https://api.tinkoff.ru/v1/currency_rates"
   end
