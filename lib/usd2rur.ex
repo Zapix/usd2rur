@@ -15,10 +15,11 @@ defmodule Usd2rur do
 
     bank_workers = Usd2rur.CrawlStrategy.crawl_map
       |> Map.values()
-      |> Enum.map(&(worker(Usd2rur.BankWorker, [&1], [id: bank_worker_id(&1)]))
+      |> Enum.map(&(worker(Usd2rur.BankWorker, [&1], [id: bank_worker_id(&1)])))
 
     # Define workers and child supervisors to be supervised
     children = [
+      supervisor(Task.Supervisor,[[name: Usd2rur.TaskSupervisor]]),
       # Start the Ecto repository
       supervisor(Usd2rur.Repo, []),
       # Start the endpoint when the application starts
@@ -45,7 +46,7 @@ defmodule Usd2rur do
     :crawler_pool
   end
 
-  defp  bank_wokrer_id(strategy) do
-    "#{apply(strategy, :name)}WorkerId"
+  def  bank_worker_id(strategy) do
+    "#{apply(strategy, :name, [])}WorkerId"
   end
 end
