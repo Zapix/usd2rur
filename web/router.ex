@@ -26,5 +26,9 @@ defmodule Usd2rur.Router do
      scope "/currency" do
        get "/:bank", CurrencyController, :bank
      end
+
+     scope "/user" do
+       post "/", UserController, :create
+     end
    end
 end
