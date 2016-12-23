@@ -27,7 +27,7 @@ defmodule Usd2rur.BankWorker do
          true <- Duration.diff(Duration.now, updated_time, :seconds) < @refresh_duration do
       {:reply, rate, state}
     else
-      something ->
+      _ ->
         state = update_rate(state)
         %{rate: rate} = state
         {:reply, rate, state}
