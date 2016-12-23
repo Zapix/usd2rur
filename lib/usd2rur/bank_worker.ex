@@ -22,11 +22,12 @@ defmodule Usd2rur.BankWorker do
   end
 
   def handle_call(:rate, _from, state) do
-    with %{rate: rate, udpated_time: updated_time} <- state,
-         true <- Duration.diff(Duration.now, updated_time) < @refresh_duration do
+    with {:ok, rate} <- Map.fetch(state, :rate),
+         {:ok, updated_time} <- Map.fetch(state, :updated_time),
+         true <- Duration.diff(Duration.now, updated_time, :seconds) < @refresh_duration do
       {:reply, rate, state}
     else
-      _ ->
+      something ->
         state = update_rate(state)
         %{rate: rate} = state
         {:reply, rate, state}
