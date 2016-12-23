@@ -1,9 +1,7 @@
 defmodule Usd2rur.CurrencyController do
   use Usd2rur.Web, :controller
-  alias Usd2rur.CrawlerWorker
-  alias Usd2rur.CrawlStrategy.AlphaBank
-  alias Usd2rur.CrawlStrategy.Sberbank
-  alias Usd2rur.CrawlStrategy.Tinkoff
+  alias Usd2rur.CrawlStrategy
+  alias Usd2rur.BankWorker
   require Logger
   require Atom
 
@@ -12,18 +10,14 @@ defmodule Usd2rur.CurrencyController do
     case Map.fetch(crawl_list, bank) do
       {:ok, module} ->
         link = apply(module, :url, [])
-        response_data = :poolboy.transaction(
-          :crawler_pool,
-          fn pid -> CrawlerWorker.crawl(pid, link) end
-        )
-        case apply(module, :parse, [response_data]) do
-          {:ok, [buy_value: buy_value, sell_value: sell_value]} ->
+        case BankWorker.get_rate(module) do
+          [buy_value: buy_value, sell_value: sell_value] ->
             json conn, %{"buy" => buy_value, "sell": sell_value}
-          {:error, code, info}  ->
-          Logger.error "Can`t get currency. Error: #{Atom.to_string code}. Info: #{inspect info}"
-          conn
-            |> put_status(400)
-            |> json(%{"error" => "something goes wrong"})
+          _  ->
+            Logger.error "Can`t get currency."
+            conn
+              |> put_status(200)
+              |> json(%{})
         end
       :error ->
         Logger.error "Tried to access #{bank}"
@@ -34,10 +28,6 @@ defmodule Usd2rur.CurrencyController do
   end
 
   defp crawl_list do
-    %{
-      "alpha" => AlphaBank,
-      "sberbank" => Sberbank,
-      "tinkoff" => Tinkoff
-    }
+    CrawlStrategy.crawl_map
   end
 end

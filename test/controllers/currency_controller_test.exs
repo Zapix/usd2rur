@@ -1,121 +1,54 @@
 defmodule Usd2rur.CurrencyControllerTest do
   use Usd2rur.ConnCase
+  use Usd2rur.CrawlStrategy
   import Mock
   require Logger
+  alias Usd2rur.BankWorker
 
   describe "/api/currency/alpha" do
-    test "success response", %{conn: conn} do
-      success_data = [
-        response: [
-          data: [
-            usd: [
-              [type: "buy", value: 63.4],
-              [type: "sell", value: 64.4]
-            ]
-          ]
-        ]
-      ]
-      {:ok, json} = JSON.encode(success_data)
-
-      response = %HTTPoison.Response{
-        status_code: 200,
-        body: json
-      }
-
-      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:ok, response} end] do
+    test "return rates", %{conn: conn} do
+      with_mock BankWorker, [get_rate: fn AlphaBank -> [buy_value: 63.4, sellf_vaule: 64.4] end] do
         conn = get conn, "/api/currency/alpha"
         assert json_response(conn, 200)
       end
     end
 
-    test "error response", %{conn: conn} do
-      response = %HTTPoison.Response{
-        status_code: 500,
-        body: "internal server error"
-      }
-
-      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:error, response} end] do
+    test "no rates", %{conn: conn} do
+      with_mock BankWorker, [get_rate: fn AlphaBank -> [] end] do
         conn = get conn, "/api/currency/alpha"
-        assert json_response(conn, 400)
+        assert json_response(conn, 200)
       end
     end
   end
 
   describe "/api/currency/sberbank" do
-    test "success response", %{conn: conn} do
-      success_data = [
-        beznal: [
-          "840": [
-            "0": [
-              buyValue: 63.4,
-              sellValue: 64.4
-            ]
-          ]
-        ]
-      ]
-      {:ok, json} = JSON.encode(success_data)
-
-      response = %HTTPoison.Response{
-        status_code: 200,
-        body: json
-      }
-
-      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:ok, response} end] do
+    test "return rates", %{conn: conn} do
+      with_mock BankWorker, [get_rate: fn Sberbank -> [buy_value: 63.4, sellf_vaule: 64.4] end] do
         conn = get conn, "/api/currency/sberbank"
         assert json_response(conn, 200)
       end
     end
 
-    test "error response", %{conn: conn} do
-      response = %HTTPoison.Response{
-        status_code: 500,
-        body: "internal server error"
-      }
-
-      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:error, response} end] do
+    test "no rates", %{conn: conn} do
+      with_mock BankWorker, [get_rate: fn Sberbank -> [] end] do
         conn = get conn, "/api/currency/sberbank"
-        assert json_response(conn, 400)
+        assert json_response(conn, 200)
       end
     end
   end
 
   describe "/api/currency/tinkoff" do
-    test "success response", %{conn: conn} do
-      success_data = [
-        payload: [
-          rates: [
-            [
-              category: "DebitCardsTransfers",
-              fromCurrency: [code: 840],
-              toCurrency: [code: 643],
-              buy: 63.4,
-              sell: 64.4
-            ]
-          ]
-        ]
-      ]
-      {:ok, json} = JSON.encode(success_data)
-
-      response = %HTTPoison.Response{
-        status_code: 200,
-        body: json
-      }
-
-      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:ok, response} end] do
+    test "return rates", %{conn: conn} do
+      with_mock BankWorker, [get_rate: fn Tinkoff -> [buy_value: 63.4, sellf_vaule: 64.4] end] do
         conn = get conn, "/api/currency/tinkoff"
         assert json_response(conn, 200)
       end
     end
 
-    test "error response", %{conn: conn} do
-      response = %HTTPoison.Response{
-        status_code: 500,
-        body: "internal server error"
-      }
-
-      with_mock :poolboy, [transaction: fn :crawler_pool, _fn-> {:error, response} end] do
+    test "no rates", %{conn: conn} do
+      with_mock BankWorker, [get_rate: fn Tinkoff -> [] end] do
         conn = get conn, "/api/currency/tinkoff"
-        assert json_response(conn, 400)
+        assert json_response(conn, 200)
       end
     end
   end
