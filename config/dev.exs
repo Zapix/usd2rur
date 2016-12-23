@@ -1,5 +1,7 @@
 use Mix.Config
 
+config :usd2rur,
+  salt: "my_salt"
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
