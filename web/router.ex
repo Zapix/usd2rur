@@ -23,6 +23,10 @@ defmodule Usd2rur.Router do
    scope "/api", Usd2rur do
      pipe_through :api
 
+     scope "/auth" do
+       post "/login", AuthController, :login
+     end
+
      scope "/currency" do
        get "/:bank", CurrencyController, :bank
      end

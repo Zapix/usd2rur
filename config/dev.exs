@@ -54,4 +54,4 @@ config :guardian, Guardian,
   allowed_drift: 2000,
   verify_issuer: true, # optional
   secret_key: "9Aijw2cDOKvf2wb/mQk1r7riOrzLt5g8lEnCC0p9aWr6EzYrqT+cvA2I+41+6ekuSVk2W8Rs8Yi10JaI77VP1g==",
-  serializer: Usd2Rur.GuardianSerializer
+  serializer: Usd2rur.GuardianSerializer
