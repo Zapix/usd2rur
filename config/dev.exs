@@ -43,3 +43,15 @@ config :usd2rur, Usd2rur.Repo,
   database: "usd2rur_dev",
   hostname: "localhost",
   pool_size: 10
+
+
+# Config guarding
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "MyApp",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: "9Aijw2cDOKvf2wb/mQk1r7riOrzLt5g8lEnCC0p9aWr6EzYrqT+cvA2I+41+6ekuSVk2W8Rs8Yi10JaI77VP1g==",
+  serializer: Usd2rur.GuardianSerializer

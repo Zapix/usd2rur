@@ -45,7 +45,8 @@ defmodule Usd2rur.Mixfile do
      {:json, "~> 1.0"},
      {:mock, "~> 0.2.0", only: :test},
      {:poolboy, "~> 1.5"},
-     {:timex, "~> 3.0"}]
+     {:timex, "~> 3.0"},
+     {:guardian, "~> 0.14.0"}]
   end
 
   # Aliases are shortcuts or tasks specific to the current project.

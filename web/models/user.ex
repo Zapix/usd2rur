@@ -1,5 +1,6 @@
 defmodule Usd2rur.User do
   use Usd2rur.Web, :model
+  alias Usd2rur.Repo
   require Logger
 
   schema "users" do
@@ -25,6 +26,11 @@ defmodule Usd2rur.User do
     |> encode_change_password()
   end
 
+  def find_user_with_password(%{ "username" => username, "password" => password }) do
+    encoded_password = encode_password(password)
+    Repo.get_by(__MODULE__, [username: username, password: encoded_password])
+  end
+
   defp encode_password(password) do
     Logger.debug "Encode password"
     salt = Application.get_env(:usd2rur, :salt)
@@ -43,4 +49,5 @@ defmodule Usd2rur.User do
       changeset
     end
   end
+
 end

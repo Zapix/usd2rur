@@ -20,3 +20,14 @@ config :usd2rur, Usd2rur.Repo,
   database: "usd2rur_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+# Config guarding
+config :guardian, Guardian,
+  allowed_algos: ["HS512"], # optional
+  verify_module: Guardian.JWT,  # optional
+  issuer: "MyApp",
+  ttl: { 30, :days },
+  allowed_drift: 2000,
+  verify_issuer: true, # optional
+  secret_key: "fake_key",
+  serializer: Usd2rur.GuardianSerializer
