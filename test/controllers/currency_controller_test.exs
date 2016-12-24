@@ -1,9 +1,30 @@
 defmodule Usd2rur.CurrencyControllerTest do
   use Usd2rur.ConnCase
   use Usd2rur.CrawlStrategy
+  alias Usd2rur.BankWorker
+  alias Usd2rur.Repo
+  alias Usd2rur.User
   import Mock
   require Logger
-  alias Usd2rur.BankWorker
+
+  setup %{conn: conn} do
+    changeset = User.changeset(
+      %User{},
+      %{
+        "username" => "test",
+        "password" => "asdf123",
+        "password_confirmation" => "asdf123"
+      }
+    )
+    {:ok, user} = Repo.insert(changeset)
+    new_conn = Guardian.Plug.api_sign_in(conn, user)
+    jwt = Guardian.Plug.current_token(new_conn)
+    new_conn = new_conn
+      |> put_req_header("auhtorization", "Bearer " <> jwt)
+
+    {:ok, [conn: new_conn, unauth_conn: conn]}
+  end
+
 
   describe "/api/currency/alpha" do
     test "return rates", %{conn: conn} do
@@ -56,5 +77,10 @@ defmodule Usd2rur.CurrencyControllerTest do
   test "not found", %{conn: conn} do
     conn = get conn, "/api/currency/fake-bank"
     assert json_response(conn, 404)
+  end
+
+  test "not auth", %{unauth_conn: conn} do
+    conn = get conn, "/api/currency/fake-bank"
+    assert json_response(conn, 401)
   end
 end

@@ -11,6 +11,12 @@ defmodule Usd2rur.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Guardian.Plug.VerifyHeader, realm: "Bearer"
+    plug Guardian.Plug.LoadResource
+  end
+
+  pipeline :api_auth do
+    plug Guardian.Plug.EnsureAuthenticated, handler: Usd2rur.AuthController
   end
 
   scope "/", Usd2rur do
@@ -27,12 +33,13 @@ defmodule Usd2rur.Router do
        post "/login", AuthController, :login
      end
 
-     scope "/currency" do
-       get "/:bank", CurrencyController, :bank
-     end
-
      scope "/user" do
        post "/", UserController, :create
+     end
+
+     scope "/currency" do
+       pipe_through :api_auth
+       get "/:bank", CurrencyController, :bank
      end
    end
 end
