@@ -19,4 +19,10 @@ defmodule Usd2rur.AuthController do
           |> json(%{ "error" => "Login failed" })
     end
   end
+
+  def unauthenticated(conn, _params) do
+    conn
+    |> put_status(401)
+    |> json(%{"error" => "Authentication required"})
+  end
 end
