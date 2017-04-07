@@ -1,6 +1,7 @@
 module Views exposing (..)
 
-import Html exposing (Html, div, text)
+import Html exposing (..)
+import Html.Attributes exposing (class)
 import Model exposing (Model)
 import Msgs exposing (Msg)
 
@@ -8,4 +9,8 @@ import Msgs exposing (Msg)
 view : Model -> Html Msg
 view model =
     div []
-        [ text model.value ]
+        [
+          button [ class "waves-effect waves-light btn" ]
+              [ text model.value
+              ]
+        ]
