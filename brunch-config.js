@@ -2,7 +2,7 @@ exports.config = {
   // See http://brunch.io/#documentation for docs.
   files: {
     javascripts: {
-      joinTo: "js/app.js"
+      joinTo: "js/app.js",
 
       // To use a separate vendor.js bundle, specify two files path
       // http://brunch.io/docs/config#-files-
@@ -12,12 +12,10 @@ exports.config = {
       // }
       //
       // To change the order of concatenation of files, explicitly mention here
-      // order: {
-      //   before: [
-      //     "web/static/vendor/js/jquery-2.1.1.js",
-      //     "web/static/vendor/js/bootstrap.min.js"
-      //   ]
-      // }
+      order: {
+        before: [
+        ]
+      }
     },
     stylesheets: {
       joinTo: "css/app.css",
@@ -42,6 +40,7 @@ exports.config = {
     // Dependencies and current project directories to watch
     watched: [
       "web/static",
+      "web/elm",
       "test/static"
     ],
 
@@ -54,6 +53,15 @@ exports.config = {
     babel: {
       // Do not use ES6 compiler in vendor code
       ignore: [/web\/static\/vendor/]
+    },
+    elmBrunch: {
+      elmFolder: 'web/elm',
+      mainModules: ['Main.elm'],
+      outputFolder: '../static/js',
+      makeParameters: ['--debug'],
+    },
+    copycat: {
+      "fonts": ["node_modules/materialize-css/dist/fonts"]
     }
   },
 
@@ -64,6 +72,13 @@ exports.config = {
   },
 
   npm: {
-    enabled: true
+    enabled: true,
+    static: [
+      "node_modules/jquery/dist/jquery.js",
+      "node_modules/materialize-css/dist/js/materialize.js"
+    ],
+    styles: {
+      'materialize-css': ['dist/css/materialize.css'],
+    }
   }
 };

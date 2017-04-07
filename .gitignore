@@ -23,3 +23,6 @@ erl_crash.dump
 # variables.
 /config/prod.secret.exs
 mix.lock
+/web/elm/elm-stuff
+/web/static/js/main.js
+web/elm/elm.js
