@@ -22,7 +22,8 @@ view model =
 loginForm : LoginModel -> Html Msg
 loginForm loginData =
     form [ onSubmit (OnLoginChange OnLoginFormSubmit) ]
-         [ div [ class "row" ]
+         [ loginError loginData.error
+         , div [ class "row" ]
                [ div [ class "input-field col s12 l6 offset-l3" ]
                      [ input [ id "username"
                              ,  name "username"
@@ -56,3 +57,14 @@ loginForm loginData =
                      ]
                ]
          ]
+
+
+loginError : Bool -> Html Msg
+loginError error =
+    case error of
+        True ->
+            div [ class "align-center" ]
+                [ text "Wrong login or password" ]
+        False ->
+            div []
+                []

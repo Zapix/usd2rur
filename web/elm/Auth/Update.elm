@@ -21,7 +21,10 @@ loginUpdate message model =
         OnLoginSucceeded (Ok auth) ->
             ({ model | auth = auth }, Cmd.none)
         OnLoginSucceeded (Err error) ->
-            ( model, Cmd.none )
+            let
+                loginData = setLoginError model.loginData
+            in
+                ( { model | loginData = loginData }, Cmd.none )
 
 
 updateLoginData : LoginModel -> LoginFormField -> String -> LoginModel
@@ -31,3 +34,8 @@ updateLoginData loginData field value =
             { loginData | username = value }
         PasswordField ->
             { loginData | password = value }
+
+
+setLoginError : LoginModel -> LoginModel
+setLoginError loginData =
+    { loginData | error = True }
