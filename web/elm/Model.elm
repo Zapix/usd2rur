@@ -1,8 +1,19 @@
 module Model exposing (..)
 
 
-type alias Model = { value: String }
+type alias Model =
+    { value: String
+    , route: Route
+    }
 
-initialModel : Model
-initialModel =
-    { value = "Hello Phoenix" }
+initialModel : Route -> Model
+initialModel route =
+    { route = route
+    , value = "Hello Phoenix"
+    }
+
+
+type Route
+    = LoginRoute
+    | AboutRoute
+    | NotFoundRoute
