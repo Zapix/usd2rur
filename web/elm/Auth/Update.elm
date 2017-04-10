@@ -4,7 +4,9 @@ import Model exposing (Model)
 import Msgs exposing (Msg)
 import Auth.Msgs exposing (LoginMsg(..))
 import Auth.Model exposing (LoginModel, LoginFormField(..))
+import Auth.Commands exposing (sendLoginDataCmd)
 import Debug
+import RemoteData
 
 loginUpdate : LoginMsg -> Model -> (Model, Cmd Msg)
 loginUpdate message model =
@@ -15,11 +17,11 @@ loginUpdate message model =
             in
                 ( { model | loginData = loginData }, Cmd.none )
         OnLoginFormSubmit ->
-            let
-                strData = toString model.loginData
-            in
-                Debug.log strData
-                ( model, Cmd.none )
+            ( model, sendLoginDataCmd model.loginData )
+        OnLoginSucceeded (Ok auth) ->
+            ({ model | auth = auth }, Cmd.none)
+        OnLoginSucceeded (Err error) ->
+            ( model, Cmd.none )
 
 
 updateLoginData : LoginModel -> LoginFormField -> String -> LoginModel

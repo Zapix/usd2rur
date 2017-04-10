@@ -16,3 +16,11 @@ initialLoginModel =
 type LoginFormField
     = UsernameField
     | PasswordField
+
+
+type alias AuthModel =
+    { token : String }
+
+initialAuthModel: AuthModel
+initialAuthModel =
+    { token = "" }
