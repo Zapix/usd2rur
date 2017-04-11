@@ -1,20 +1,25 @@
 module Main exposing (..)
 
-import Html exposing (Html, program)
+import Navigation exposing (Location)
 import Model exposing (Model, initialModel)
 import Msgs exposing (Msg)
 import Update exposing (update)
 import Subscriptions exposing (subscriptions)
 import Views exposing (view)
+import Routing exposing (parseLocation)
 
 
 
+init : Location -> (Model, Cmd Msg)
+init location =
+    let
+        currentRoute = parseLocation location
+    in
+        ( initialModel currentRoute, Cmd.none )
 
-init : ( Model, Cmd Msg)
-init = ( initialModel, Cmd.none )
 
 -- MAIN
-main = program
+main = Navigation.program Msgs.OnLocationChange
     { init = init
     , view = view
     , update = update
