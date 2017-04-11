@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (class, id, href)
 import Model exposing (Model)
 import Msgs exposing (Msg)
-import Routing exposing (loginPath, aboutPath)
+import Routing exposing (mainPath, loginPath, aboutPath)
 
 
 view : Model -> Html Msg
@@ -26,6 +26,14 @@ logo =
 
 menu : Model -> Html Msg
 menu model =
+    case model.auth of
+        Just auth ->
+            authorizedMenu model
+        Nothing ->
+            anonymousMenu model
+
+anonymousMenu : Model -> Html Msg
+anonymousMenu model =
     ul [ id "nav-mobile"
        , class "right hide-on-med-and-down"
        ]
@@ -36,5 +44,25 @@ menu model =
         , li []
              [ a [ href aboutPath ]
                  [ text "About" ]
+             ]
+        ]
+
+
+authorizedMenu : Model -> Html Msg
+authorizedMenu model =
+    ul [ id "nav-mobile"
+       , class "right hide-on-med-and-down"
+       ]
+        [ li []
+             [ a [ href mainPath ]
+                 [ text "Main" ]
+             ]
+        , li []
+             [ a [ href aboutPath ]
+                 [ text "About" ]
+             ]
+        , li []
+             [ a []
+                 [ text "Logout" ]
              ]
         ]

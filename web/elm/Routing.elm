@@ -8,7 +8,7 @@ import UrlParser exposing (..)
 matchers : Parser (Route -> a) a
 matchers =
     oneOf
-         [ map LoginRoute top
+         [ map MainRoute top
          , map LoginRoute (s "login")
          , map AboutRoute (s "about")
          ]
@@ -21,6 +21,10 @@ parseLocation location =
             route
         Nothing ->
             NotFoundRoute
+
+
+mainPath : String
+mainPath = "#"
 
 
 loginPath : String

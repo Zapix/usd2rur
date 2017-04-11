@@ -27,6 +27,8 @@ update message model =
 updateModelOnRouteChange : Model -> Route -> Model
 updateModelOnRouteChange model route =
     case route of
+        MainRoute ->
+            model
         AboutRoute ->
             model
         LoginRoute ->

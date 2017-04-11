@@ -6,7 +6,7 @@ type alias Model =
     { value: String
     , route: Route
     , loginData: LoginModel
-    , auth: AuthModel
+    , auth: Maybe AuthModel
     }
 
 initialModel : Route -> Model
@@ -19,6 +19,7 @@ initialModel route =
 
 
 type Route
-    = LoginRoute
+    = MainRoute
+    | LoginRoute
     | AboutRoute
     | NotFoundRoute

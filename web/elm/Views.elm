@@ -5,8 +5,9 @@ import Html.Attributes exposing (class)
 import Model exposing (Model, Route(..))
 import Msgs exposing (Msg)
 import Common.Navigation
-import Auth.Login
 import Page.About
+import Page.Login
+import Page.Main
 
 
 view : Model -> Html Msg
@@ -22,8 +23,10 @@ view model =
 page: Model -> Html Msg
 page model =
     case model.route of
+        MainRoute ->
+            Page.Main.view model
         LoginRoute ->
-            Auth.Login.view model
+            Page.Login.view model
         AboutRoute ->
             Page.About.view model
         NotFoundRoute ->
@@ -34,4 +37,3 @@ notFoundView : Model -> Html Msg
 notFoundView model =
     div []
         [ text "Page Not Found" ]
-

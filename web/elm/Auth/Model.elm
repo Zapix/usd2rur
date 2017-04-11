@@ -23,6 +23,6 @@ type LoginFormField
 type alias AuthModel =
     { token : String }
 
-initialAuthModel: AuthModel
+initialAuthModel: Maybe AuthModel
 initialAuthModel =
-    { token = "" }
+    Nothing

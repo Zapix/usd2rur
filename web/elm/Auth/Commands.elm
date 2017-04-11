@@ -3,7 +3,7 @@ module Auth.Commands exposing (..)
 import Http
 import Json.Encode as Encode
 import Json.Decode as Decode
-import Json.Decode.Pipeline exposing (decode, required)
+import Json.Decode.Pipeline exposing (decode, required, optional)
 import Auth.Model exposing (LoginModel, AuthModel)
 import Auth.Msgs exposing (LoginMsg(OnLoginSucceeded))
 import Msgs exposing (Msg(OnLoginChange))

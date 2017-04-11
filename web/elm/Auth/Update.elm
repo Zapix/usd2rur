@@ -19,7 +19,7 @@ loginUpdate message model =
         OnLoginFormSubmit ->
             ( model, sendLoginDataCmd model.loginData )
         OnLoginSucceeded (Ok auth) ->
-            ({ model | auth = auth }, Cmd.none)
+            ({ model | auth = Just auth }, Cmd.none)
         OnLoginSucceeded (Err error) ->
             let
                 loginData = setLoginError model.loginData
