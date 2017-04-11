@@ -1,5 +1,6 @@
 module Model exposing (..)
 import Auth.Model exposing (LoginModel, initialLoginModel, AuthModel, initialAuthModel)
+import Bank.Model exposing (BankModel, initialBankModel)
 
 
 type alias Model =
@@ -7,7 +8,9 @@ type alias Model =
     , route: Route
     , loginData: LoginModel
     , auth: Maybe AuthModel
+    , bank: BankModel
     }
+
 
 initialModel : Route -> Model
 initialModel route =
@@ -15,6 +18,7 @@ initialModel route =
     , value = "Hello Phoenix"
     , loginData = initialLoginModel
     , auth = initialAuthModel
+    , bank = initialBankModel
     }
 
 
