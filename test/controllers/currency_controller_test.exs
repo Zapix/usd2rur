@@ -26,6 +26,14 @@ defmodule Usd2rur.CurrencyControllerTest do
   end
 
 
+  describe "/api/currency" do
+    test "return available list", %{conn: conn} do
+        conn = get conn, "/api/currency"
+        assert json_response(conn, 200)
+    end
+  end
+
+
   describe "/api/currency/alpha" do
     test "return rates", %{conn: conn} do
       with_mock BankWorker, [get_rate: fn AlphaBank -> [buy_value: 63.4, sellf_vaule: 64.4] end] do
