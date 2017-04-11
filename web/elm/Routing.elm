@@ -10,6 +10,7 @@ matchers =
     oneOf
          [ map MainRoute top
          , map LoginRoute (s "login")
+         , map LogoutRoute (s "logout")
          , map AboutRoute (s "about")
          ]
 
@@ -29,6 +30,10 @@ mainPath = "#"
 
 loginPath : String
 loginPath = "#login"
+
+
+logoutPath : String
+logoutPath = "#logout"
 
 
 aboutPath : String

@@ -4,7 +4,7 @@ import Html exposing (..)
 import Html.Attributes exposing (class, id, href)
 import Model exposing (Model)
 import Msgs exposing (Msg)
-import Routing exposing (mainPath, loginPath, aboutPath)
+import Routing exposing (mainPath, loginPath, logoutPath, aboutPath)
 
 
 view : Model -> Html Msg
@@ -31,6 +31,7 @@ menu model =
             authorizedMenu model
         Nothing ->
             anonymousMenu model
+
 
 anonymousMenu : Model -> Html Msg
 anonymousMenu model =
@@ -62,7 +63,7 @@ authorizedMenu model =
                  [ text "About" ]
              ]
         , li []
-             [ a []
+             [ a [ href logoutPath ]
                  [ text "Logout" ]
              ]
         ]

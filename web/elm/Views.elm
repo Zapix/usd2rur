@@ -7,6 +7,7 @@ import Msgs exposing (Msg)
 import Common.Navigation
 import Page.About
 import Page.Login
+import Page.Logout
 import Page.Main
 
 
@@ -27,6 +28,8 @@ page model =
             Page.Main.view model
         LoginRoute ->
             Page.Login.view model
+        LogoutRoute ->
+            Page.Logout.view model
         AboutRoute ->
             Page.About.view model
         NotFoundRoute ->

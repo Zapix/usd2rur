@@ -6,7 +6,7 @@ import Model exposing (Model, Route(..))
 import Routing exposing (parseLocation)
 import Auth.Msgs exposing (LoginMsg)
 import Auth.Update exposing (loginUpdate)
-import Auth.Model exposing (initialLoginModel)
+import Auth.Model exposing (initialLoginModel, initialAuthModel)
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -33,5 +33,7 @@ updateModelOnRouteChange model route =
             model
         LoginRoute ->
             { model | loginData = initialLoginModel }
+        LogoutRoute ->
+            { model | auth = initialAuthModel }
         NotFoundRoute ->
             model

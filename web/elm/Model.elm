@@ -21,5 +21,6 @@ initialModel route =
 type Route
     = MainRoute
     | LoginRoute
+    | LogoutRoute
     | AboutRoute
     | NotFoundRoute
