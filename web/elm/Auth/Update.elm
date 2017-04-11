@@ -2,10 +2,11 @@ module Auth.Update exposing (..)
 
 import Model exposing (Model)
 import Msgs exposing (Msg)
+import Navigation exposing (newUrl)
 import Auth.Msgs exposing (LoginMsg(..))
 import Auth.Model exposing (LoginModel, LoginFormField(..))
 import Auth.Commands exposing (sendLoginDataCmd)
-import Debug
+import Routing exposing (mainPath)
 import RemoteData
 
 loginUpdate : LoginMsg -> Model -> (Model, Cmd Msg)
@@ -19,7 +20,7 @@ loginUpdate message model =
         OnLoginFormSubmit ->
             ( model, sendLoginDataCmd model.loginData )
         OnLoginSucceeded (Ok auth) ->
-            ({ model | auth = Just auth }, Cmd.none)
+            ({ model | auth = Just auth }, newUrl mainPath)
         OnLoginSucceeded (Err error) ->
             let
                 loginData = setLoginError model.loginData
