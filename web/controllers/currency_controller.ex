@@ -5,6 +5,12 @@ defmodule Usd2rur.CurrencyController do
   require Logger
   require Atom
 
+
+  def list(conn, _) do
+    bank_list = Map.values(crawl_list)
+    render conn, "bank_list.json", %{bank_list: bank_list}
+  end
+
   def bank(conn, %{"bank" => bank}) do
     Logger.info "Get data for #{bank} from on of #{inspect crawl_list}"
     case Map.fetch(crawl_list, bank) do
