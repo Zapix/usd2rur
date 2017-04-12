@@ -7,6 +7,7 @@ import Update exposing (update)
 import Subscriptions exposing (subscriptions)
 import Views exposing (view)
 import Routing exposing (parseLocation)
+import Update exposing (sendCommandOnRouteChange)
 
 
 
@@ -14,8 +15,9 @@ init : Location -> (Model, Cmd Msg)
 init location =
     let
         currentRoute = parseLocation location
+        model = initialModel currentRoute
     in
-        ( initialModel currentRoute, Cmd.none )
+        ( model, sendCommandOnRouteChange model currentRoute )
 
 
 -- MAIN

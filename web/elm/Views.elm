@@ -9,6 +9,7 @@ import Page.About
 import Page.Login
 import Page.Logout
 import Page.Main
+import Page.BankDetails
 
 
 view : Model -> Html Msg
@@ -32,6 +33,8 @@ page model =
             Page.Logout.view model
         AboutRoute ->
             Page.About.view model
+        BankDetailsRoute bankSlug ->
+            Page.BankDetails.view model bankSlug
         NotFoundRoute ->
             notFoundView model
 
