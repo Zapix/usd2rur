@@ -12,6 +12,7 @@ matchers =
          , map LoginRoute (s "login")
          , map LogoutRoute (s "logout")
          , map AboutRoute (s "about")
+         , map BankDetailsRoute (s "bank" </> string)
          ]
 
 
@@ -39,3 +40,6 @@ logoutPath = "#logout"
 aboutPath : String
 aboutPath = "#about"
 
+bankDetailsPath : String -> String
+bankDetailsPath bankSlug =
+    "#bank/" ++ bankSlug

@@ -48,3 +48,4 @@ encodeLoginData loginData =
             ]
     in
         Encode.object attributes
+

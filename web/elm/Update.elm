@@ -7,7 +7,8 @@ import Routing exposing (parseLocation)
 import Auth.Msgs exposing (LoginMsg)
 import Auth.Update exposing (loginUpdate)
 import Auth.Model exposing (initialLoginModel, initialAuthModel)
-import Bank.Commands exposing (loadingBankListCmd)
+import Auth.Helper exposing (redirectOnAnonymous)
+import Bank.Commands exposing (loadingBankListCmd, loadCurrencyCmd)
 import Bank.Update exposing (bankUpdate)
 
 
@@ -41,6 +42,8 @@ updateModelOnRouteChange model route =
             { model | loginData = initialLoginModel }
         LogoutRoute ->
             { model | auth = initialAuthModel }
+        BankDetailsRoute bankSlug ->
+            model
         NotFoundRoute ->
             model
 
@@ -56,6 +59,7 @@ sendCommandOnRouteChange model route =
             Cmd.none
         LogoutRoute ->
             Cmd.none
+        BankDetailsRoute bankSlug ->
+            redirectOnAnonymous model (\model -> loadCurrencyCmd model bankSlug)
         NotFoundRoute ->
             Cmd.none
-

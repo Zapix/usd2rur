@@ -24,6 +24,7 @@ initialModel route =
 
 type Route
     = MainRoute
+    | BankDetailsRoute String
     | LoginRoute
     | LogoutRoute
     | AboutRoute

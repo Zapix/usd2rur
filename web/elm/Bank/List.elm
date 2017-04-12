@@ -2,10 +2,11 @@ module Bank.List exposing (..)
 
 
 import Html exposing (..)
-import Html.Attributes exposing (class)
+import Html.Attributes exposing (class, href)
 import Msgs exposing (Msg)
 import Model exposing (Model)
 import Bank.Model exposing (BankModel, Bank)
+import Routing exposing (bankDetailsPath)
 import RemoteData
 
 view : Model -> Html Msg
@@ -41,7 +42,8 @@ bankList banks =
     table [ class "bordered" ]
         [ thead []
             [ tr []
-                 [ th [] [ text "Name" ] ]
+                 [ th [] [  text "Name" ]
+                 ]
             ]
         , tbody [] (List.map bankRow banks)
         ]
@@ -51,5 +53,6 @@ bankRow : Bank -> Html Msg
 bankRow bank =
     tr []
        [ td []
-            [ text bank.name ]
+            [ a [ href (bankDetailsPath bank.slug) ] [ text bank.name ]
+            ]
        ]
