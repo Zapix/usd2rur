@@ -11,6 +11,13 @@ type alias BankModel =
 type alias Bank =
     { name: String
     , slug: String
+    , currency: WebData Currency
+    }
+
+
+type alias Currency =
+    { buy: Float
+    , sell: Float
     }
 
 

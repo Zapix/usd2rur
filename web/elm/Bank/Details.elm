@@ -3,8 +3,8 @@ module Bank.Details exposing (..)
 import Html exposing (..)
 import Msgs exposing (Msg)
 import Model exposing (Model)
-import Bank.Model exposing (BankModel, Bank)
-import RemoteData
+import Bank.Model exposing (BankModel, Bank, Currency)
+import RemoteData exposing (WebData)
 
 
 view : Model -> String -> Html Msg
@@ -35,8 +35,36 @@ displayBank bank =
     case bank of
         Just bank ->
             div []
-                [ h4 [] [ text bank.name ] ]
+                [ h4 [] [ text bank.name ]
+                , maybeDisplayCurrency bank.currency
+                ]
         Nothing ->
             div []
                 [ text "bank not found" ]
 
+
+maybeDisplayCurrency : WebData Currency -> Html Msg
+maybeDisplayCurrency currency =
+    case currency of
+        RemoteData.NotAsked ->
+            text "Loading..."
+        RemoteData.Loading ->
+            text "Loading..."
+        RemoteData.Success currency ->
+            displayCurrency currency
+        RemoteData.Failure err ->
+            text "Someting goes wrong"
+
+
+displayCurrency : Currency -> Html Msg
+displayCurrency currency =
+    table []
+          [ tr []
+               [ th [] [ text "Buy" ]
+               , td [] [ text ((toString currency.buy) ++ " RUR") ]
+               ]
+          , tr []
+               [ th [] [ text "Sell" ]
+               , td [] [ text ((toString currency.sell) ++ " RUR") ]
+               ]
+          ]

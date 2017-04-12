@@ -8,7 +8,7 @@ import Auth.Msgs exposing (LoginMsg)
 import Auth.Update exposing (loginUpdate)
 import Auth.Model exposing (initialLoginModel, initialAuthModel)
 import Auth.Helper exposing (redirectOnAnonymous)
-import Bank.Commands exposing (loadingBankListCmd)
+import Bank.Commands exposing (loadingBankListCmd, loadCurrencyCmd)
 import Bank.Update exposing (bankUpdate)
 
 
@@ -60,6 +60,6 @@ sendCommandOnRouteChange model route =
         LogoutRoute ->
             Cmd.none
         BankDetailsRoute bankSlug ->
-            redirectOnAnonymous model (\model -> Cmd.none)
+            redirectOnAnonymous model (\model -> loadCurrencyCmd model bankSlug)
         NotFoundRoute ->
             Cmd.none
