@@ -2,7 +2,8 @@ use Mix.Config
 
 config :usd2rur, Usd2rur.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "usd2rur.heroku.com", port: 80],
+  url: [scheme: "https", host: "usd2rur.heroku.com", port: 443],
+  force_ssl: [rewrite_on: [:x_forwarded_proto]],
   cache_static_manifest: "priv/static/manifest.json"
 
 config :logger, level: :info
