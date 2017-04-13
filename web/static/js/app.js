@@ -11,6 +11,7 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
+import styles from 'materialize-css/dist/css/materialize.css';
 import jQuery from 'jquery';
 import materializeCss from 'materialize-css/dist/js/materialize';
 import "phoenix_html"
