@@ -8,6 +8,7 @@
   "dependencies": {
     "babel": "^6.23.0",
     "babel-cli": "^6.24.1",
+    "babel-brunch": "~6.0.0",
     "copycat-brunch": "^1.1.0",
     "jquery": "^3.2.1",
     "materialize-css": "^0.98.1",
@@ -17,7 +18,6 @@
   "devDependencies": {
     "elm": "^0.18.0",
     "elm-brunch": "^0.8.0",
-    "babel-brunch": "~6.0.0",
     "brunch": "2.7.4",
     "clean-css-brunch": "~2.0.0",
     "css-brunch": "~2.0.0",
