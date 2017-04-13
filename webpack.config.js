@@ -4,10 +4,10 @@ const elmSource = __dirname + '/web/elm';
 
 
 module.exports = {
-  entry: ["./web/static/css/app.css", "./web/static/js/app.js"],
+  entry: "./web/static/js/app.js",
   output: {
-    path: __dirname + "/priv/static/js",
-    filename: "app.js"
+    path: __dirname + "/priv/static",
+    filename: "js/app.js"
   },
   module: {
     loaders: [
@@ -24,16 +24,16 @@ module.exports = {
         loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css-loader' })
       },
       {
-        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff'
+        test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff&outputPath=css/&publicPath=../'
       },
       {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream'
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=application/octet-stream&outputPath=css/&publicPath=../'
       },
       {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader'
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file-loader?outputPath=css/&publicPath=../'
       },
       {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url-loader?limit=10000&mimetype=image/svg+xml&outputPath=css/&publicPath=../'
       },
       {
         test: /\.elm$/,
