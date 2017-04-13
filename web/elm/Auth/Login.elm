@@ -56,6 +56,7 @@ loginForm loginData =
                          [ text "Login" ]
                      ]
                ]
+         , div [ ] [ text "Hint: login: demo / password: 123123" ]
          ]
 
 
