@@ -1,5 +1,9 @@
 use Mix.Config
 
+
+config :usd2rur,
+  salt: System.get_env("SALT")
+
 config :usd2rur, Usd2rur.Endpoint,
   http: [port: {:system, "PORT"}],
   url: [scheme: "https", host: "usd2rur.heroku.com", port: 443],
